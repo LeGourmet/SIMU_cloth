@@ -28,10 +28,10 @@ public class AABB{
     if(this.max.z < aabb.max.z)  this.max.z = aabb.max.z;
   }
   
-  public PVector centroid() { return PVector.mult(PVector.add(min,max),0.5) ; }
+  public PVector centroid() { return PVector.mult(PVector.add(this.min,this.max),0.5) ; }
   
   public float surface(){
-    PVector d = PVector.sub(max,min);
+    PVector d = PVector.sub(this.max,this.min);
     return 2.f * ( d.x*d.y + d.x*d.z + d.y*d.z ); 
   }
  
@@ -46,23 +46,15 @@ public class AABB{
   }
  
   public boolean intersect( float tMin, float tMax, PVector o, PVector d ){ 
-    PVector[] MinMax = { min, max };
-    int[] s = { int(d.x<0.), int(d.y<0.), int(d.z<0.) };
-  
-    // *** X axis ***
-    float tmpMin, refMin = ((MinMax[s[0]]).x - o.x) / d.x;
-    float tmpMax, refMax = ((MinMax[1-s[0]]).x - o.x) / d.x;
-  
-    // *** Y axis ***
-      if( (tmpMin=((MinMax[s[1]]).y - o.y)/d.y)>refMax || refMin>(tmpMax=((MinMax[1-s[1]]).y - o.y)/d.y) ) return false;
-      refMin = max( tmpMin, refMin );
-      refMax = min( tmpMax, refMax );
-  
-    // *** Z axis ***
-      if( (tmpMin=((MinMax[s[2]]).z - o.z)/d.z)>refMax || refMin>(tmpMax=((MinMax[1-s[2]]).z - o.z)/d.z) ) return false;
-      refMin = max( tmpMin, refMin );
-      refMax = min( tmpMax, refMax );
-  
-    return (refMin<tMax) && (refMax>tMin);
+      PVector tmin = PVector_div(PVector.sub(this.min,o),d);
+      PVector tmax = PVector_div(PVector.sub(this.max,o),d);
+
+      PVector a = new PVector(min(tmin.x,tmax.x), min(tmin.y, tmax.y), min(tmin.z, tmax.z));
+      PVector b = new PVector(max(tmin.x,tmax.x), max(tmin.y, tmax.y), max(tmin.z, tmax.z));
+
+      float tnear = max(max(a.x, a.y), a.z);
+      float tfar = min(min(b.x, b.y), b.z);
+
+      return tnear<=tfar && tfar>=tMin && tnear<=tMax;
   }
 } 

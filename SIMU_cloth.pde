@@ -13,7 +13,7 @@ final float   RESTITUION_FORCE_COLLISION = 0.9;
 // ------------------------ CLOTH VAR ------------------------
 final int     SIZE_CLOTH = 500;
 final int     NB_CUT_CLOTH = 75;
-final PVector CENTER_CLOTH = new PVector(0,100,0);
+final PVector CENTER_CLOTH = new PVector(0,200,0);
 final String  TEXTURE_CLOTH = "./textures/FrenchFlag.jpg";
 
 final float   MASS_CLOTH = 1500;
@@ -30,8 +30,8 @@ void setup(){
   camera = new PeasyCam(this,600);
   
   scene = new Scene(new Cloth(SIZE_CLOTH, SIZE_CLOTH, NB_CUT_CLOTH, CENTER_CLOTH, MASS_CLOTH));
-  scene.addObstacle(new Obstacle(new PVector( -100.,0.,0.), color(0,127,127),80.,OBSTACLE_PATH));
-  scene.addObstacle(new Obstacle(new PVector( 100.,0.,0.), color(0,127,127),60.,OBSTACLE_PATH));
+  scene.addObstacle(new Obstacle(new PVector( -100.,-100.,0.), color(0,127,127),80.,OBSTACLE_PATH));
+  scene.addObstacle(new Obstacle(new PVector( 100.,-100.,0.), color(0,127,127),60.,OBSTACLE_PATH));
   
   noStroke();
 }
