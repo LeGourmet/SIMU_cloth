@@ -10,7 +10,7 @@ public class Point{
   
   // ---------------------------------------------------- CONSTRUCTOR ----------------------------------------------------
   public Point(PVector pos, color col, float mass){
-    this.pos = pos;
+    this.pos = pos.copy();
     this.pos_old = pos.copy();
     this.forces = new PVector(0.,0.,0.);
     this.mass = mass;
@@ -36,7 +36,7 @@ public class Point{
     pos_old.set(pos);
     pos.set(pos_next);
     
-    this.forces.set(0.,0.,0.);
+    forces.set(0.,0.,0.);
   }
   
   public void interCollision(MetricTree mt){

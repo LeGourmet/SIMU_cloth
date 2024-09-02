@@ -47,8 +47,8 @@ public class Cloth{
     // construct grid
     for(int i=0; i<x ;i++)
       for(int j=0; j<y ;j++){
-        this.points.add(new Point(new PVector(i*sizeCellX+center.x-sizeX/2., -center.y, j*sizeCellY+center.z-sizeY/2.), texture.pixels[j*x+i], massPoints));
-        this.mt.insert(points.get(i), width);
+        points.add(new Point(new PVector(i*sizeCellX+center.x-sizeX/2., -center.y, j*sizeCellY+center.z-sizeY/2.), texture.pixels[j*x+i], massPoints));
+        mt.insert(points.get(i), width);
       }
      
     // construt triangles
@@ -61,15 +61,24 @@ public class Cloth{
     // construct springs
     for(int i=0; i<x ;i++)
       for(int j=0; j<y;j++){
-        if(i<x-1) springs.add(new Spring(points.get(j+y*i),points.get(j+y*(i+1))));
-        if(j<y-1) springs.add(new Spring(points.get(j+y*i),points.get(j+1+y*i)));
+        if(i<x-1)          springs.add(new Spring(points.get(j+y*i),points.get(j+y*(i+1))));
+        if(j<y-1)          springs.add(new Spring(points.get(j+y*i),points.get(j+1+y*i)));
         if(i<x-1 && j<y-1) springs.add(new Spring(points.get(j+y*i),points.get(j+1+y*(i+1))));
-        if(i>0 && j<y-1) springs.add(new Spring(points.get(j+y*i),points.get(j+1+y*(i-1))));
+        if(i>0 && j<y-1)   springs.add(new Spring(points.get(j+y*i),points.get(j+1+y*(i-1))));
+      }
+      
+      // blocked points
+    for(int i=0; i<x-1 ;i++)
+      for(int j=0; j<y/20. ;j++){
+        points.get(j+y*(i+1)).blocked = true; 
+        points.get(x-1-j+y*(i+1)).blocked = true;
       }
   }
  
   public void applyForces(float dt){
+    PVector wind = new PVector(random(-5.,5.),random(-2.,0.),random(-5.,5.));
     points.forEach(p -> p.applyForce(PVector.mult(GRAVITY,p.mass)));
+    points.forEach(p -> p.applyForce(PVector.mult(wind,1.)));
     points.forEach(p -> p.applyForce(PVector.mult(p.getVelocity(dt),-0.01)));
   }
   

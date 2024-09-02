@@ -2,9 +2,9 @@ import peasy.*;
 import java.util.Collections;
 
 // ------------------------ GLOBAL VAR ------------------------
-final float   DELTA_TIME = 0.1;
-final PVector GRAVITY = new PVector(0.,9.81,0.);
-final float   EPS = 0.01;
+final float   DELTA_TIME   = 0.1;
+final PVector GRAVITY      = new PVector(0.,9.81,0.);
+final float   EPS          = 0.01;
 
 // ------------------------ OBSTACLE VAR ------------------------
 final String  OBSTACLE_PATH = "./models/Icosphere.obj";
