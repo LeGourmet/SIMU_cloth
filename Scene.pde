@@ -17,7 +17,7 @@ public class Scene{
   public void display(){
     beginShape(TRIANGLES);
     cloth.vertices();
-    obstacles.forEach(sp -> sp.vertices());
+    if(displayObstacle) obstacles.forEach(sp -> sp.vertices());
     endShape(CLOSE);
   }
   

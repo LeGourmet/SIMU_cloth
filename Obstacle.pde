@@ -49,7 +49,7 @@ public class Obstacle {
     HitRecord hit = bvh.intersect(0., t_max, p.pos_old, dir);
 
     if(hit.t>=0. && hit.t<t_max) {
-       p.move(PVector.mult(dir, -(t_max-hit.t)));
+       p.pos = PVector.add(p.pos_old,PVector.mult(dir,hit.t));
        p.move(PVector.mult(hit.normal,1.));
        PVector vec = PVector.sub(p.pos, p.pos_old);
        p.setVelocity(PVector.sub(vec,PVector.mult(hit.normal,RESTITUION_FORCE_COLLISION*2.*PVector.dot(hit.normal,vec))));

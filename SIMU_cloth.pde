@@ -22,6 +22,9 @@ final float   CLOTH_C = 0.5;
 final float   CLOTH_MAX_STRETCHING = 1.35f;
 final float   CLOTH_MIN_STRETCHING = 0.1f;
 
+boolean paused = false;
+boolean displayObstacle = true;
+
 PeasyCam camera;
 Scene scene;
 
@@ -42,12 +45,14 @@ void draw(){
   
   scene.display();
   scene.refreshDataStructure();
-  scene.update(DELTA_TIME);
+  if(!paused) scene.update(DELTA_TIME);
 }
 
 void keyPressed(){
   switch(key){
     case 'r' : scene.reset(); break;
-    case 'p' : println("frameRate: "+frameRate); 
+    case 'p' : println("frameRate: "+frameRate); break;
+    case 'd' : displayObstacle = !displayObstacle; break;
+    case ' ' : paused = !paused; break;
   }
 }
